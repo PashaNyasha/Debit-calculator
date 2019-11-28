@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Calculator</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="font/icofont/icofont.min.css">
+</head>
+
+<body>
+
+    <article class="debit-calculator">
+        <!-- Калькулятор -->
+        <section class="calculator">
+            <label for="sum-range" class="sum"> <span>Первоначальный взнос:</span>
+                <input type="text" name="sum-text" id="sum-text" placeholder="0" ">
+                <input type="range" name="sum" id="sum-range" value="0" min="0" max="100000">
+                <div class="plus"></div>
+            </label>
+
+            <label for="date-range" class="date-range"> <span>Срок вклада:</span>
+                    <input type="text" name="date-text" id="date-text" placeholder="0">
+                    <input type="range" name="sum" id="date-range" min="0" max="12" value="0">
+                    <div class="plus"></div>
+            </label>
+
+            <div class="percents">
+                <div class="percent" data-percent="5">5%</div>
+                <div class="percent" data-percent="6.5">6%</div>
+                <div class="percent" data-percent="7">7%</div>
+                <div class="percent" data-percent="8">8%</div>
+                <div class="percent" data-percent="9">9%</div>
+                <div class="percent" data-percent="10">10%</div>
+            </div>
+
+            <input type="text" name="rep" id="replenishment" placeholder="Пополнение">
+
+            <div class="replenishment-days">
+                <nav class="select-replenishment-time">
+                    <span>Переодичность пополнения</span>
+                    <ul class="sub hide">
+                        <li data-days='1'>Раз в месяц</li>
+                        <li data-days='2'>Раз в 2 месяца</li>
+                        <li data-days='3'>Раз в 3 месяца</li>
+                        <li data-days='4'>Раз в 4 месяца</li>
+                        <li data-days='6'>Раз в полгода</li>
+                        <li data-days='12'>Раз в год</li>
+                    </ul>
+                    <button id="cancel" class="hide">&#xec4f;</button>
+
+                </nav>
+            </div>
+
+            <label for="capitalization"> 
+                    <input type="checkbox" name="capitalization" id="capitalization">
+                    <span>Капитализация</span>
+            </label>
+
+
+            <button id="calculate">Посчитать</button>
+        </section>
+
+        <!-- Результат -->
+        <section class="result">
+            <table>
+                <tr>
+                    <th>Дата расчета</th>
+                    <th>Начислено процентов, ₽</th>
+                    <th>Добавлено по вкладу, ₽</th>
+                    <th>Сумма вклада на конец срока, ₽</th>
+                </tr>
+
+                <tr></tr>
+            </table>
+            <div class="total">
+                <p></p>
+            </div>
+
+            <button class="rotate-back">&#xefd1;</button>
+        </section>
+    </article>
+
+    <article class="error-box"></article>
+
+    <template>
+        <tr>
+            <td>Дата расчета</td>
+            <td>Начислено процентов, ₽</td>
+            <td>Добавлено по вкладу, ₽</td>
+            <td>Сумма вклада на конец срока, ₽</td>
+        </tr>
+
+        <div class="error"></div>
+    </template>
+
+    <script src="js/script.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,1052 @@
+    body {
+        margin: 0;
+        padding: 0;
+        font-family: Arial, Helvetica, sans-serif;
+    }
+    
+    * {
+        margin: 0;
+        padding: 0;
+    }
+    
+    @font-face {
+        src: url('../font/icofont/fonts/icofont.ttf');
+        font-family: 'Icofont';
+    }
+    /* Артикль */
+    
+    .debit-calculator {
+        width: 450px;
+        margin: 20px auto;
+        display: flex;
+        position: relative;
+    }
+    
+    .calculator {
+        background: #fff;
+        width: inherit;
+        height: 468px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        border: 5px solid #20b2aa;
+        border-radius: 10px;
+        z-index: 1;
+        transition: .5s ease;
+        position: absolute;
+        backface-visibility: hidden;
+    }
+    /* Первоначальный взнос и срок вклада */
+    
+    label[for='sum-range'],
+    label[for='date-range'] {
+        width: 350px;
+        height: 100px;
+        box-sizing: border-box;
+        position: relative;
+    }
+    /* Заголовок */
+    
+    label[for='sum-range'] span,
+    label[for='date-range'] span {
+        margin: 5px auto;
+        display: block;
+        text-align: center;
+        width: 100%;
+    }
+    /* Текстовое поле */
+    
+    label[for='sum-range'] input[type="text"],
+    label[for='date-range'] input[type="text"] {
+        width: inherit;
+        height: 30px;
+        position: absolute;
+        top: 45px;
+        left: -1px;
+        text-align: center;
+        border: none;
+        outline: none;
+        border-radius: 5px 5px 0 0;
+        font-size: 20px;
+        transition: box-shadow 0.3s ease;
+    }
+    
+    label[for='sum-range'] input[type="text"]:focus,
+    label[for='date-range'] input[type="text"]:focus {
+        box-shadow: 0 0 0 1px rgb(18, 121, 255);
+    }
+    /* Линия ползунка */
+    
+    label[for='sum-range'] input[type="range"],
+    label[for='date-range'] input[type="range"] {
+        -webkit-appearance: none;
+        width: inherit;
+        height: 2px;
+        background: rgb(151, 151, 151);
+        outline: none;
+        position: absolute;
+        top: 76px;
+        left: -1px;
+    }
+    /* Ползунок */
+    
+    label[for='sum-range'] input[type="range"]::-webkit-slider-thumb,
+    label[for='date-range'] input[type="range"]::-webkit-slider-thumb {
+        -webkit-appearance: none;
+        width: 15px;
+        height: 15px;
+        background: rgb(0, 183, 255);
+        border-radius: 50%;
+        cursor: pointer;
+        position: relative;
+        z-index: 1;
+        transition: transform 0.1s ease;
+    }
+    
+    label[for='sum-range'] input[type="range"]::-webkit-slider-thumb:hover,
+    label[for='date-range'] input[type="range"]::-webkit-slider-thumb:hover {
+        transform: scale(1.5);
+    }
+    
+    label[for='sum-range'] input[type="range"]:focus,
+    label[for='date-range'] input[type="range"]:focus {
+        outline: none;
+    }
+    /* Когда полоска заполняется, заполненная часть окрасится в другой цвет */
+    
+    .plus {
+        position: absolute;
+        width: 0px;
+        height: 2px;
+        background: rgb(80, 230, 11);
+        top: 76px;
+        left: -1px;
+    }
+    /* Проценты */
+    
+    .percents {
+        margin: 20px auto;
+        width: 100%;
+        height: 50px;
+        box-sizing: border-box;
+        text-align: center;
+    }
+    
+    .percent {
+        display: inline-block;
+        width: 50px;
+        height: 50px;
+        background: rgb(161, 161, 161);
+        color: #fff;
+        text-align: center;
+        line-height: 50px;
+        font-size: 20px;
+        transition: 0.1s ease;
+        cursor: pointer;
+    }
+    
+    .percent:hover {
+        transform: translateY(-5px);
+        border-radius: 5px;
+    }
+    
+    .percent-active {
+        background: rgb(30, 173, 255);
+        transform: translateY(-5px);
+        border-radius: 5px;
+        box-shadow: 0px 0px 3px rgb(30, 173, 255);
+    }
+    /* Пополнение */
+    
+    .debit-calculator input[type='text'] {
+        width: 350px;
+        height: 30px;
+        text-align: center;
+        font-size: 20px;
+    }
+    
+    .debit-calculator input[type='text']:focus::placeholder {
+        opacity: 0;
+    }
+    /* Переодичность пополнения */
+    
+    .replenishment-days {
+        width: 350px;
+        border: 1px solid rgb(163, 162, 162);
+        text-align: center;
+        margin-top: 5px;
+    }
+    
+    .replenishment-days .select-replenishment-time {
+        position: relative;
+        width: inherit;
+        cursor: pointer;
+        box-sizing: border-box;
+    }
+    
+    .replenishment-days span {
+        padding: 5px 0 5px 0;
+        display: block;
+    }
+    
+    .replenishment-days span::after {
+        content: "";
+        position: absolute;
+        top: 50%;
+        margin-top: -5px;
+        right: 10px;
+        border: 10px solid rgb(29, 118, 206);
+        border-bottom-color: transparent;
+        border-left-color: transparent;
+        border-right-color: transparent;
+    }
+    
+    .replenishment-days .sub {
+        margin: 0;
+        padding: 0;
+        list-style: none;
+        background: #fff;
+        position: absolute;
+        border: 1px solid rgb(163, 162, 162);
+        border-top: none;
+        border-radius: 0 0 5px 5px;
+        width: inherit;
+        top: 29px;
+        left: -1px;
+        z-index: 1;
+    }
+    
+    .replenishment-days .sub li {
+        padding: 5px;
+        position: relative;
+        cursor: pointer;
+    }
+    
+    .replenishment-days .sub li:hover {
+        background: rgb(29, 118, 206);
+        color: #fff;
+    }
+    
+    .replenishment-days .sub li::after {
+        content: "";
+        position: absolute;
+        top: 50%;
+        margin-top: -10px;
+        right: 10px;
+        border: 10px solid rgb(182, 182, 182);
+        border-top-color: transparent;
+        border-bottom-color: transparent;
+        border-left-color: transparent;
+        display: none;
+    }
+    
+    .replenishment-days .sub li:hover::after {
+        display: block;
+    }
+    
+    .replenishment-days button {
+        position: absolute;
+        top: 50%;
+        right: -30px;
+        width: 25px;
+        height: 25px;
+        margin-top: -12.5px;
+        background: none;
+        outline: none;
+        border: none;
+        font: normal 15px 'Icofont';
+        color: red;
+        text-shadow: -2px 0px 0 #000, 2px 0px 0 #000, 0px -2px 0 #000, 0px 2px 0 #000;
+        cursor: pointer;
+    }
+    
+    .replenishment-days button:active {
+        font-size: 10px;
+    }
+    
+    .hide {
+        display: none;
+    }
+    /* Капитализация */
+    
+    label[for='capitalization'] {
+        margin-top: 20px;
+        position: relative;
+    }
+    
+    label[for='capitalization'] input[type="checkbox"] {
+        display: none;
+    }
+    
+    label[for='capitalization'] span {
+        padding-right: 35px;
+        cursor: pointer;
+    }
+    
+    label[for='capitalization'] span::after {
+        content: "";
+        position: absolute;
+        right: 0;
+        width: 16px;
+        height: 16px;
+        border: 2px solid rgb(163, 162, 162);
+        border-radius: 5px;
+        transition: .1s ease;
+    }
+    
+    input[type="checkbox"]:checked+span::after {
+        border-top-color: transparent;
+        border-right-color: transparent;
+        border-radius: 0;
+        width: 16px;
+        height: 7px;
+        transform: rotate(-45deg) translateY(-3px);
+        border-left-color: lime;
+        border-bottom-color: lime;
+        box-shadow: -1px 1.5px 1px rgba(0, 0, 0, .5);
+    }
+    /* Посчтитать */
+    
+    #calculate {
+        width: 150px;
+        height: 30px;
+        margin: 20px 0 20px 0;
+        border: none;
+        outline: none;
+        font-size: 18px;
+        color: #fff;
+        background: rgb(30, 173, 255);
+        border: 2px solid rgb(30, 173, 255);
+        border-radius: 5px;
+        cursor: pointer;
+    }
+    
+    #calculate:hover {
+        color: #fff;
+    }
+    
+    #calculate:active {
+        transform: scale(.9);
+    }
+    /* Результат */
+    
+    .result {
+        width: inherit;
+        height: 478px;
+        border: 5px solid #20b2aa;
+        border-radius: 10px;
+        overflow: hidden;
+        box-sizing: border-box;
+        position: relative;
+        transform: rotateY(180deg);
+        transition: .5s ease;
+    }
+    
+    .result table {
+        margin: 0 auto;
+        border-collapse: collapse;
+        box-sizing: border-box;
+        width: inherit;
+    }
+    
+    .result table td,
+    .result table th {
+        border-left: 2px solid rgb(163, 162, 162);
+        text-align: center;
+        font-size: 16px;
+        padding: 3.9px;
+    }
+    
+    .result table th {
+        font-weight: normal;
+        font-size: 15px;
+    }
+    
+    .result table td:first-child,
+    .result table th:first-child {
+        border-left: none;
+    }
+    
+    .result table tr {
+        border-bottom: 2px solid rgb(163, 162, 162);
+    }
+    /*     
+    .result table tr:last-child {
+        border-bottom: none;
+    } */
+    
+    .result table tr:not(:first-child):hover {
+        color: #fff;
+        background: rgb(30, 173, 255);
+    }
+    
+    .result .total {
+        width: inherit;
+        position: absolute;
+        bottom: 0;
+    }
+    
+    .result .total p {
+        padding: 0 0 0 5px;
+        margin: 0;
+        font-size: 16px;
+        line-height: 35px;
+        letter-spacing: 1px;
+    }
+    
+    .left {
+        transform: translateX(0px);
+    }
+    
+    .right {
+        transform: translateX(0px);
+    }
+    /* Вывод ошибок */
+    
+    .error-box {
+        width: 250px;
+        height: 100%;
+        border: 1px solid;
+        position: fixed;
+        top: 0;
+        right: -250px;
+        z-index: 2;
+    }
+    
+    .error {
+        width: inherit;
+        height: 70px;
+        max-height: 100px;
+        border: 3px solid rgb(133, 133, 133);
+        border-radius: 5px;
+        transform: translateY(3px);
+    }
+    
+    .error p {
+        display: block;
+        text-align: center;
+        line-height: 70px;
+    }
+    
+    .show-error {
+        animation: showErr .5s ease-in-out;
+        transform: translateX(-101%);
+    }
+    
+    @keyframes showErr {
+        0% {
+            transform: translateX(100%);
+        }
+        50% {
+            transform: translateX(-110%);
+        }
+        100% {
+            transform: translateX(-101%);
+        }
+    }
+    /* Кнопка возврата к калькулятору */
+    
+    .rotate-back {
+        width: 50px;
+        height: 50px;
+        position: absolute;
+        bottom: 55px;
+        right: 3px;
+        background: none;
+        border: none;
+        outline: none;
+        font: normal 30px 'Icofont';
+        cursor: pointer;
+    }
+    
+    .rotate-back:hover {
+        animation: rotateRefresh 0.5s ease;
+    }
+    
+    @keyframes rotateRefresh {
+        to {
+            transform: rotate(360deg);
+        }
+    }
+    
+    .rotate-180 {
+        transform: rotateY(-180deg);
+    }
+    
+    .rotate-360 {
+        transform: rotateY(360deg);
+    }
+    /* ///////////////////////////////////////////////////////////////////////////////// */
+    /* 320px */
+    
+    @media screen and (min-width: 320px) and (max-width: 425px) {
+        .debit-calculator {
+            width: 300px;
+            margin: 20px auto;
+            perspective: 1000px;
+        }
+        .calculator {
+            background: #fff;
+            width: 290px;
+            height: 418px;
+            transform: translateX(0);
+            z-index: 1;
+            transition: .5s ease;
+            backface-visibility: hidden;
+        }
+        /* Первоначальный взнос и срок вклада */
+        label[for='sum-range'],
+        label[for='date-range'] {
+            width: 250px;
+            height: 90px;
+            box-sizing: border-box;
+            position: relative;
+        }
+        /* Заголовок */
+        label[for='sum-range'] span,
+        label[for='date-range'] span {
+            font-size: 16px;
+            margin: 0 auto;
+            display: block;
+            text-align: center;
+            width: 100%;
+        }
+        /* Текстовое поле */
+        label[for='sum-range'] input[type="text"],
+        label[for='date-range'] input[type="text"] {
+            width: inherit;
+            height: 30px;
+            position: absolute;
+            top: 35px;
+            left: -1px;
+            font-size: 16px;
+            transition: box-shadow 0.3s ease;
+        }
+        label[for='sum-range'] input[type="text"]:focus,
+        label[for='date-range'] input[type="text"]:focus {
+            box-shadow: 0 0 0 1px rgb(18, 121, 255);
+        }
+        /* Линия ползунка */
+        label[for='sum-range'] input[type="range"],
+        label[for='date-range'] input[type="range"] {
+            top: 65px;
+            left: -1px;
+        }
+        /* Когда полоска заполняется, заполненная часть окрасится в другой цвет */
+        .plus {
+            top: 65px;
+        }
+        /* Проценты */
+        .percents {
+            margin: 15px auto;
+            width: 100%;
+            height: 30px;
+        }
+        .percent {
+            width: 35px;
+            height: 35px;
+            line-height: 35px;
+            font-size: 15px;
+        }
+        /* Пополнение */
+        .debit-calculator input[type='text'] {
+            width: 250px;
+            height: 25px;
+            font-size: 16px;
+        }
+        /* Переодичность пополнения */
+        .replenishment-days {
+            width: 250px;
+            margin-top: 5px;
+        }
+        .replenishment-days span {
+            padding: 5px 0 5px 0;
+            display: block;
+            font-size: 16px;
+        }
+        .replenishment-days span::after {
+            top: 50%;
+            margin-top: -3px;
+            right: 3px;
+            border: 7px solid rgb(29, 118, 206);
+            border-bottom-color: transparent;
+            border-left-color: transparent;
+            border-right-color: transparent;
+        }
+        .replenishment-days .sub li {
+            padding: 3px;
+            position: relative;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        .replenishment-days .sub li::after {
+            margin-top: -7px;
+            right: 3px;
+            border: 7px solid rgb(182, 182, 182);
+            border-top-color: transparent;
+            border-bottom-color: transparent;
+            border-left-color: transparent;
+            display: none;
+        }
+        .replenishment-days button {
+            right: -23px;
+            font: normal 12px 'Icofont';
+        }
+        /* Капитализация */
+        label[for='capitalization'] {
+            margin-top: 15px;
+        }
+        label[for='capitalization'] span {
+            padding-right: 35px;
+        }
+        /* Результат */
+        .result {
+            width: 290px;
+            height: 418px;
+            transform: translateX(0px);
+            position: absolute;
+            transform: rotateY(180deg);
+        }
+        .result table {
+            width: 100%;
+        }
+        .result table td,
+        .result table th {
+            font-size: 12px;
+            padding: 4px 1px 4px 1px;
+        }
+        .result .total {
+            width: 100%;
+        }
+        .result .total p {
+            padding: 0 0 0 5px;
+            margin: 0;
+            font-size: 12px;
+            line-height: 18px;
+            letter-spacing: 1px;
+        }
+        /* Вывод ошибок */
+        .error-box {
+            width: 150px;
+            height: 100%;
+            right: -150px;
+        }
+        .error {
+            width: inherit;
+            height: 50px;
+            max-height: 75px;
+            border: 3px solid rgb(133, 133, 133);
+            border-radius: 5px;
+            transform: translateY(3px);
+            background: #fff;
+        }
+        .error p {
+            display: block;
+            font-size: 16px;
+            text-align: center;
+            line-height: 50px;
+        }
+        .show-error {
+            animation: showErr .5s ease-in-out;
+            transform: translateX(-101%);
+        }
+        /* Кнопка возврата к калькулятору */
+        .rotate-back {
+            width: 30px;
+            height: 30px;
+            bottom: 45px;
+            right: 3px;
+            font: normal 25px 'Icofont';
+        }
+        .rotate-180 {
+            transform: rotateY(-180deg);
+        }
+        .rotate-360 {
+            transform: rotateY(360deg);
+        }
+        .rotate-back:hover {
+            animation: rotateRefresh 0.5s ease;
+        }
+        @keyframes rotateRefresh {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+    }
+    /* ///////////////////////////////////////////// */
+    /* 768px */
+    
+    @media screen and (min-width: 425px) and (max-width: 768px) {
+        .debit-calculator {
+            width: 400px;
+            margin: 20px auto;
+            perspective: 1000px;
+        }
+        .calculator {
+            background: #fff;
+            width: inherit;
+            height: 450px;
+            transform: translateX(0);
+            z-index: 1;
+            transition: .5s ease;
+            backface-visibility: hidden;
+        }
+        /* Первоначальный взнос и срок вклада */
+        label[for='sum-range'],
+        label[for='date-range'] {
+            margin-top: 5px;
+            width: 320px;
+            height: 70px;
+        }
+        /* Заголовок */
+        label[for='sum-range'] span,
+        label[for='date-range'] span {
+            font-size: 18px;
+        }
+        /* Текстовое поле */
+        label[for='sum-range'] input[type="text"],
+        label[for='date-range'] input[type="text"] {
+            top: 20px;
+            left: -1px;
+            font-size: 18px;
+            transition: box-shadow 0.3s ease;
+        }
+        /* Линия ползунка */
+        label[for='sum-range'] input[type="range"],
+        label[for='date-range'] input[type="range"] {
+            top: 65px;
+            left: -1px;
+        }
+        /* Когда полоска заполняется, заполненная часть окрасится в другой цвет */
+        .plus {
+            top: 65px;
+        }
+        /* Проценты */
+        .percents {
+            margin: 15px auto;
+            width: 100%;
+            height: 30px;
+        }
+        .percent {
+            width: 45px;
+            height: 45px;
+            line-height: 45px;
+            font-size: 18px;
+        }
+        /* Пополнение */
+        .debit-calculator input[type='text'] {
+            margin-top: 15px;
+            width: 300px;
+            height: 25px;
+            font-size: 18px;
+        }
+        /* Переодичность пополнения */
+        .replenishment-days {
+            width: 300px;
+            margin-top: 10px;
+        }
+        .replenishment-days span {
+            padding: 5px 0 5px 0;
+            display: block;
+            font-size: 16px;
+        }
+        .replenishment-days span::after {
+            top: 50%;
+            margin-top: -3px;
+            right: 5px;
+            border: 9px solid rgb(29, 118, 206);
+            border-bottom-color: transparent;
+            border-left-color: transparent;
+            border-right-color: transparent;
+        }
+        .replenishment-days .sub li {
+            padding: 3px;
+            position: relative;
+            cursor: pointer;
+            font-size: 17px;
+        }
+        .replenishment-days .sub li::after {
+            margin-top: -9px;
+            right: 5px;
+            border: 9px solid rgb(182, 182, 182);
+            border-top-color: transparent;
+            border-bottom-color: transparent;
+            border-left-color: transparent;
+            display: none;
+        }
+        .replenishment-days button {
+            margin-top: -15px;
+            right: -30px;
+            font: normal 15px 'Icofont';
+        }
+        /* Капитализация */
+        label[for='capitalization'] {
+            margin-top: 45px;
+        }
+        label[for='capitalization'] span {
+            padding-right: 35px;
+        }
+        #calculate {
+            margin-top: 45px;
+        }
+        /* Результат */
+        .result {
+            width: inherit;
+            height: 450px;
+            transform: translateX(0px);
+            position: absolute;
+            transform: rotateY(180deg);
+        }
+        .result table {
+            width: 100%;
+        }
+        .result table td,
+        .result table th {
+            font-size: 14px;
+            padding: 4px 1px 4px 1px;
+        }
+        .result .total {
+            width: 100%;
+        }
+        .result .total p {
+            padding: 0 0 0 5px;
+            margin: 0;
+            font-size: 14px;
+            line-height: 18px;
+            letter-spacing: 1px;
+        }
+        /* Вывод ошибок */
+        .error-box {
+            width: 150px;
+            height: 100%;
+            right: -150px;
+        }
+        .error {
+            width: inherit;
+            height: 50px;
+            max-height: 75px;
+            border: 3px solid rgb(133, 133, 133);
+            border-radius: 5px;
+            transform: translateY(3px);
+            background: #fff;
+        }
+        .error p {
+            display: block;
+            font-size: 16px;
+            text-align: center;
+            line-height: 50px;
+        }
+        .show-error {
+            animation: showErr .5s ease-in-out;
+            transform: translateX(-101%);
+        }
+        .rotate-180 {
+            transform: rotateY(-180deg);
+        }
+        .rotate-360 {
+            transform: rotateY(360deg);
+        }
+        /* Кнопка возврата к калькулятора */
+        .rotate-back {
+            width: 30px;
+            height: 30px;
+            bottom: 45px;
+            right: 5px;
+        }
+    }
+    /* /////////////////////////// */
+    /* 768px */
+    
+    @media screen and (min-width: 768px) and (max-width: 900px) {
+        .debit-calculator {
+            width: 500px;
+            margin: 20px auto;
+            perspective: 1000px;
+        }
+        .calculator {
+            background: #fff;
+            width: inherit;
+            height: 500px;
+            transform: translateX(0);
+            z-index: 1;
+            transition: .5s ease;
+            backface-visibility: hidden;
+        }
+        /* Первоначальный взнос и срок вклада */
+        label[for='sum-range'],
+        label[for='date-range'] {
+            margin-top: 15px;
+            width: 400px;
+            height: 100px;
+        }
+        /* Заголовок */
+        label[for='sum-range'] span,
+        label[for='date-range'] span {
+            font-size: 20px;
+        }
+        /* Текстовое поле */
+        label[for='sum-range'] input[type="text"],
+        label[for='date-range'] input[type="text"] {
+            top: 20px;
+            left: -1px;
+            font-size: 20px;
+            transition: box-shadow 0.3s ease;
+        }
+        /* Линия ползунка */
+        label[for='sum-range'] input[type="range"],
+        label[for='date-range'] input[type="range"] {
+            top: 75px;
+            left: -1px;
+        }
+        /* Когда полоска заполняется, заполненная часть окрасится в другой цвет */
+        .plus {
+            top: 75px;
+        }
+        /* Проценты */
+        .percents {
+            margin: 15px auto;
+            width: 100%;
+            height: 30px;
+        }
+        .percent {
+            width: 50px;
+            height: 50px;
+            line-height: 50px;
+            font-size: 20px;
+        }
+        /* Пополнение */
+        .debit-calculator input[type='text'] {
+            margin-top: 25px;
+            width: 350px;
+            height: 50px;
+            font-size: 20px;
+        }
+        /* Переодичность пополнения */
+        .replenishment-days {
+            width: 350px;
+            margin-top: 10px;
+        }
+        .replenishment-days span {
+            padding: 5px 0 5px 0;
+            display: block;
+            font-size: 20px;
+        }
+        .replenishment-days span::after {
+            top: 50%;
+            margin-top: -3px;
+            right: 5px;
+            border: 9px solid rgb(29, 118, 206);
+            border-bottom-color: transparent;
+            border-left-color: transparent;
+            border-right-color: transparent;
+        }
+        .replenishment-days .sub li {
+            padding: 3px;
+            position: relative;
+            cursor: pointer;
+            font-size: 20px;
+        }
+        .replenishment-days .sub li::after {
+            margin-top: -9px;
+            right: 7px;
+            border: 9px solid rgb(182, 182, 182);
+            border-top-color: transparent;
+            border-bottom-color: transparent;
+            border-left-color: transparent;
+            display: none;
+        }
+        .replenishment-days button {
+            margin-top: -12px;
+            right: -30px;
+            font: normal 20px 'Icofont';
+        }
+        /* Капитализация */
+        label[for='capitalization'] {
+            margin-top: 35px;
+        }
+        label[for='capitalization'] span {
+            padding-right: 35px;
+            font-size: 20px;
+        }
+        label[for='capitalization'] span::after {
+            width: 20px;
+            height: 20px;
+        }
+        #calculate {
+            margin-top: 35px;
+            height: 50px;
+            width: 200px;
+            font-size: 25px;
+        }
+        /* Результат */
+        .result {
+            width: inherit;
+            height: 500px;
+            transform: translateX(0px);
+            position: absolute;
+            transform: rotateY(180deg);
+        }
+        .result table {
+            width: 100%;
+        }
+        .result table td,
+        .result table th {
+            font-size: 16px;
+            padding: 5px 1px 5px 1px;
+        }
+        .result .total {
+            width: 100%;
+        }
+        .result .total p {
+            padding: 0 0 0 5px;
+            margin: 0;
+            font-size: 18px;
+            line-height: 22px;
+            letter-spacing: 1px;
+        }
+        /* Вывод ошибок */
+        .error-box {
+            width: 150px;
+            height: 100%;
+            right: -150px;
+        }
+        .error {
+            width: inherit;
+            height: 50px;
+            border: 3px solid rgb(133, 133, 133);
+            border-radius: 5px;
+            transform: translateY(5px);
+            background: #fff;
+        }
+        .error p {
+            display: block;
+            font-size: 18px;
+            text-align: center;
+            line-height: 50px;
+        }
+        .show-error {
+            animation: showErr .5s ease-in-out;
+            transform: translateX(-101%);
+        }
+        .rotate-180 {
+            transform: rotateY(-180deg);
+        }
+        .rotate-360 {
+            transform: rotateY(360deg);
+        }
+        /* Кнопка возврата к калькулятора */
+        .rotate-back {
+            width: 50px;
+            height: 50px;
+            bottom: 41px;
+            right: 3px;
+        }
+        .rotate-back:hover {
+            animation: rotateRefresh 0.5s ease;
+        }
+        @keyframes rotateRefresh {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+    }
